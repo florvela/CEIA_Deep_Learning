@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils.XOR_v2 import XOR
+from utils.XOR import XOR
 
 # XOR dataset
 X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
