@@ -24,7 +24,6 @@ class XOR:
         self.Z2_bias = np.random.uniform(size=(1, 1))
 
     def forward_propagation(self, X):
-        # Forward Propagation
         Z1_activation = np.dot(X, self.Z1_weights)
         Z1_activation += self.Z1_bias
         self.Z1_output = sigmoid(Z1_activation)
@@ -35,7 +34,7 @@ class XOR:
 
         return prediction
 
-    def back_propagation(self, y, prediction):
+    def back_propagation(self, X, y, prediction):
         error = y - prediction
         d_prediction = error * sigmoid_deriv(prediction)
 
@@ -51,7 +50,7 @@ class XOR:
     def train(self, X, y):
         for _ in range(self.n_epochs):
             prediction = self.forward_propagation(X)
-            self.back_propagation(y, prediction)
+            self.back_propagation(X, y, prediction)
 
     def predict(self, input):
         prediction = self.forward_propagation(input)
@@ -60,20 +59,3 @@ class XOR:
             return 1
         else:
             return 0
-
-# XOR dataset
-X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
-y = np.array([[0], [1], [1], [0]])
-
-xor_obj = XOR(n_epochs=10000, lr=0.1)
-xor_obj.train(X, y)
-
-
-test = np.array([[1, 0]])
-assert xor_obj.predict(test) == 1
-test = np.array([[0, 0]])
-assert xor_obj.predict(test) == 0
-test = np.array([[0, 1]])
-assert xor_obj.predict(test) == 1
-test = np.array([[1, 1]])
-assert xor_obj.predict(test) == 0
